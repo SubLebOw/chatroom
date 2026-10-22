@@ -1,0 +1,13 @@
+*{box-sizing:border-box}body{margin:0;font:16px system-ui,sans-serif;background:#111418;color:#e6e6e6;height:100dvh}
+input,button{font:inherit;padding:.6em;border-radius:8px;border:1px solid #333;background:#1c2128;color:inherit}
+button{background:#2f6feb;border:0;cursor:pointer}button:disabled{opacity:.5}
+.card{max-width:360px;margin:10vh auto;padding:1.5em;display:flex;flex-direction:column;gap:.8em}
+label{display:flex;flex-direction:column;gap:.3em}.row{display:flex;gap:.5em}.row input{flex:1;text-transform:uppercase}
+#status{color:#f88;min-height:1.2em}
+#room{display:flex;flex-direction:column;height:100dvh}#room[hidden]{display:none}
+header{display:flex;gap:.5em;align-items:center;padding:.5em;background:#1c2128}header span{flex:1}
+.main{flex:1;display:flex;min-height:0}#msgs{flex:1;overflow-y:auto;list-style:none;margin:0;padding:.5em}
+#msgs li{margin:.3em 0;word-wrap:break-word}#msgs .t{color:#777;font-size:.8em;margin-right:.4em}#msgs .n{color:#7ab7ff;font-weight:600;margin-right:.4em}
+#msgs .sys{color:#999;font-style:italic}aside{width:160px;border-left:1px solid #333;padding:.5em;overflow-y:auto}aside ul{list-style:none;padding:0}
+form{display:flex;gap:.5em;padding:.5em}form input{flex:1}
+@media(max-width:600px){aside{display:none}.main{flex-direction:column}}

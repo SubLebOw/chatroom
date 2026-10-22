@@ -1,0 +1,11 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chat Room</title><link rel="stylesheet" href="style.css"></head><body>
+<section id="lobby" class="card"><h1>Chat Room</h1>
+<label>Nickname<input id="nick" maxlength="20" placeholder="Your name"></label>
+<button id="host">HOST a room</button>
+<div class="row"><input id="code" maxlength="4" placeholder="CODE"><button id="join">JOIN</button></div>
+<p id="status"></p></section>
+<section id="room" hidden><header><span>Room <b id="rcode"></b></span><button id="copy">Copy link</button><button id="leave">Leave</button></header>
+<div class="main"><ul id="msgs"></ul><aside><h3>Members (<span id="count">0</span>)</h3><ul id="members"></ul></aside></div>
+<form id="form"><input id="text" maxlength="500" autocomplete="off" placeholder="Message"><button>Send</button></form></section>
+<script src="vendor/peerjs.min.js"></script><script src="app.js"></script></body></html>
