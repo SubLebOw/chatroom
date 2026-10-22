@@ -2,7 +2,7 @@
 <title>Chat Room</title><link rel="stylesheet" href="style.css"></head><body>
 <section id="lobby" class="card"><h1>Chat Room</h1>
 <label>Nickname<input id="nick" maxlength="20" placeholder="Your name"></label>
-<button id="host">HOST a room</button>
+<div class="row"><input id="hcode" maxlength="4" placeholder="Code (optional)"><button id="host">HOST</button></div>
 <div class="row"><input id="code" maxlength="4" placeholder="CODE"><button id="join">JOIN</button></div>
 <p id="status"></p></section>
 <section id="room" hidden><header><span>Room <b id="rcode"></b></span><button id="copy">Copy link</button><button id="leave">Leave</button></header>

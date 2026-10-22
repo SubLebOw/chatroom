@@ -29,6 +29,8 @@ function relay(m){handle(m);for(const c of conns.values())if(c.name&&c.open)try{
 const sys=text=>relay({t:'sys',text,ts:Date.now()});
 const pushMembers=()=>relay({t:'members',list:hostList()});
 $('host').onclick=async()=>{me=nick();if(!me)return;busy(true);status('Opening room…');
+  const fixed=norm($('hcode').value);if(fixed&&fixed.length!==4){status('Room codes are 4 letters.');busy(false);return}
+  if(fixed){try{peer=await newPeer(PREFIX+fixed);code=fixed}catch(e){status(e.type==='unavailable-id'?'Code '+fixed+' is already in use. Try another, or wait a minute if you just closed it.':errText(e));busy(false);peer=null;return}}
   for(let i=0;i<5&&!peer;i++){const c=rnd();try{peer=await newPeer(PREFIX+c);code=c}catch(e){if(e.type!=='unavailable-id'){status(errText(e));busy(false);return}}}
   if(!peer){status('Could not create a room, try again');busy(false);return}
   isHost=true;peer.on('disconnected',()=>{try{peer.reconnect()}catch{}});
@@ -55,4 +57,6 @@ $('form').onsubmit=e=>{e.preventDefault();const text=$('text').value.trim();if(!
   if(isHost)relay({t:'msg',name:me,text:text.slice(0,500),ts:Date.now()});else if(hostConn&&hostConn.open)hostConn.send({t:'msg',text})};
 $('copy').onclick=()=>{const u=location.origin+location.pathname+'?room='+code;navigator.clipboard?.writeText(u);$('copy').textContent='Copied!';setTimeout(()=>$('copy').textContent='Copy link',1500)};
 $('leave').onclick=()=>{if(isHost)for(const c of conns.values())try{c.send({t:'bye',reason:'Host left, room closed.'})}catch{};setTimeout(()=>location.href=location.pathname,200)};
+const hq=new URLSearchParams(location.search).get('host');if(hq!==null){$('hcode').value=norm(hq);if($('nick').value.trim())$('host').click()}
+$('hcode').oninput=e=>e.target.value=norm(e.target.value);
 $('code').oninput=e=>e.target.value=norm(e.target.value);

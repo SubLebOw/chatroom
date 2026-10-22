@@ -11,3 +11,4 @@ header{display:flex;gap:.5em;align-items:center;padding:.5em;background:#1c2128}
 #msgs .sys{color:#999;font-style:italic}aside{width:160px;border-left:1px solid #333;padding:.5em;overflow-y:auto}aside ul{list-style:none;padding:0}
 form{display:flex;gap:.5em;padding:.5em}form input{flex:1}
 @media(max-width:600px){aside{display:none}.main{flex-direction:column}}
+#hcode{text-transform:uppercase}
