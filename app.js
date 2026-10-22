@@ -39,6 +39,7 @@ $('host').onclick=async()=>{me=nick();if(!me)return;busy(true);status('Opening r
       if(m.t==='hello'&&!c.name){c.name=String(m.name||'Guest').slice(0,20);pushMembers();sys(c.name+' joined')}
       else if(m.t==='msg'&&c.name)relay({t:'msg',name:c.name,text:String(m.text||'').slice(0,500),ts:Date.now()})});
     const gone=()=>{if(conns.delete(c.peer)&&c.name){sys(c.name+' left');pushMembers()}};c.on('close',gone);c.on('error',gone)});
+  setInterval(()=>{for(const c of conns.values())if(c.open)try{c.send({t:'ping'})}catch{}},3000);
   enter();showMembers(hostList());add({t:'sys',text:'Room open. Share the link or code '+code+'.'})};
 window.addEventListener('beforeunload',()=>{if(isHost)for(const c of conns.values())try{c.send({t:'bye',reason:'Host left, room closed.'})}catch{}});
 
@@ -49,7 +50,8 @@ $('join').onclick=async()=>{me=nick();if(!me)return;code=norm($('code').value);i
     const t=setTimeout(()=>rej(new Error('Could not connect to that room.')),12000);c.once('open',()=>{clearTimeout(t);res(c)});peer.once('error',e=>{clearTimeout(t);rej(e)})})}
   catch(e){status(errText(e));busy(false);try{peer.destroy()}catch{};peer=null;return}
   let ended=false;const end=r=>{if(ended)return;ended=true;add({t:'sys',text:r});$('text').disabled=true;showMembers([])};
-  hostConn.on('data',m=>{if(m&&m.t==='bye')end(m.reason);else if(m)handle(m)});
+  let seen=Date.now();const hb=setInterval(()=>{if(Date.now()-seen>10000){clearInterval(hb);end('Host left, room closed.')}},2000);
+  hostConn.on('data',m=>{seen=Date.now();if(m&&m.t==='bye')end(m.reason);else if(m)handle(m)});
   hostConn.on('close',()=>end('Host left, room closed.'));
   hostConn.send({t:'hello',name:me});enter()};
 
